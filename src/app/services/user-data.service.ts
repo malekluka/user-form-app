@@ -3,12 +3,11 @@ import { User } from '../models/user.model';
 import { FormGroup } from '@angular/forms';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class UserDataService {
   private storageKey = 'usersData';
   private partialFormKey = 'partialFormData'; // Key for storing partial form data
-
 
   // Save users array
   saveUsers(users: User[]): void {
@@ -21,22 +20,20 @@ export class UserDataService {
     return data ? JSON.parse(data) : [];
   }
 
-
   // Save partial (unsaved) form data
-savePartialForm(formData: Partial<User>): void {
-  localStorage.setItem(this.partialFormKey, JSON.stringify(formData));
-}
+  savePartialForm(formData: Partial<User>): void {
+    localStorage.setItem(this.partialFormKey, JSON.stringify(formData));
+  }
 
-// Retrieve partial form data
-getPartialForm(): Partial<User> | null {
-  const data = localStorage.getItem(this.partialFormKey);
-  return data ? JSON.parse(data) : null;
-}
+  // Retrieve partial form data
+  getPartialForm(): Partial<User> | null {
+    const data = localStorage.getItem(this.partialFormKey);
+    return data ? JSON.parse(data) : null;
+  }
 
-clearPartialForm(): void {
-  localStorage.removeItem(this.partialFormKey);
-}
-
+  clearPartialForm(): void {
+    localStorage.removeItem(this.partialFormKey);
+  }
 
   // Add new user on submitting the form , by populating the form values into newUser object
   addUserAfterSubmission(form: FormGroup, profilePic: string): User {
