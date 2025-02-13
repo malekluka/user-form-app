@@ -1,0 +1,164 @@
+<div class="container mt-5 mb-5">
+  <div class="card shadow-lg p-4">
+    <h2 class="text-center mb-4 fw-bold text-primary">Employee Registration</h2>
+
+    <form [formGroup]="userForm" (ngSubmit)="onSubmitForm()" class="needs-validation" novalidate>
+      
+      <!-- Profile Picture Upload -->
+      <div class="text-center mb-4">
+        <label for="profilePic" class="d-block rounded-circle">
+          <img [src]="profilePic" class="profile-pic"
+            alt="Profile Picture" width="120" height="120">
+
+        </label>
+        <input type="file" id="profilePic" (change)="onProfilePicUpload($event)" class="form-control mt-2 d-none" accept="image/*">
+        <button type="button" class="btn btn-outline-primary mt-2" onclick="document.getElementById('profilePic').click()">
+          Upload Photo
+        </button>
+        
+      </div>
+
+      <!-- Form Inputs (Wrapped Layout) -->
+      <div class="row g-3">
+        <div formGroupName="fullName" class="row g-3">
+          <div class="col-md-6">
+            <label class="form-label">First Name</label>
+            <input type="text" class="form-control rounded-pill" formControlName="firstName"
+              [class.is-invalid]="userForm.get('fullName.firstName')?.invalid && userForm.get('fullName.firstName')?.touched"
+              placeholder = "Enter First Name"
+              autocomplete="off"
+              list="firstNameSuggestions" >
+              <datalist id="firstNameSuggestions">
+                @if (storedValues?.fullName?.firstName) {
+                  <option [value]="storedValues.fullName.firstName"></option>
+                }
+              </datalist>
+            <div class="invalid-feedback">First name must be at least 5 characters.</div>
+          </div>
+        
+          <div class="col-md-6">
+            <label class="form-label">Last Name</label>
+            <input type="text" class="form-control rounded-pill" formControlName="lastName"
+              [class.is-invalid]="userForm.get('fullName.lastName')?.invalid && userForm.get('fullName.lastName')?.touched"
+              placeholder = "Enter Last Name" 
+              autocomplete="off"
+              list="lastNameSuggestions">
+              <datalist id="lastNameSuggestions">
+                @if (storedValues?.fullName?.lastName) {
+                  <option [value]="storedValues.fullName.lastName"></option>
+                }
+              </datalist>
+              
+            <div class="invalid-feedback">Last name must be at least 5 characters.</div>
+          </div>
+        </div>
+        
+
+        <div class="col-md-6">
+          <label class="form-label">Username</label>
+          <input type="text" class="form-control rounded-pill" formControlName="userName"
+            [class.is-invalid]="userForm.get('userName')?.invalid && userForm.get('userName')?.touched"
+            placeholder = "Enter Username"
+            autocomplete="off"
+             list="usernameSuggestions">
+            <datalist id="usernameSuggestions">
+              @if (storedValues?.userName) {
+                <option [value]="storedValues.userName"></option>
+              }
+            </datalist>
+          <div class="invalid-feedback">Username is required.</div>
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label">Email</label>
+          <input type="email" class="form-control rounded-pill" formControlName="email"
+            [class.is-invalid]="userForm.get('email')?.invalid && userForm.get('email')?.touched"
+            placeholder = "Enter Email" 
+            autocomplete="off"
+            list="emailSuggestions">
+            <datalist id="emailSuggestions">
+              @if (storedValues?.email) {
+                <option [value]="storedValues.email"></option>
+              }
+            </datalist>
+          <div class="invalid-feedback">Enter a valid email.</div>
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label">Birthdate</label>
+          <input type="date" class="form-control rounded-pill" formControlName="birthDate"
+            [class.is-invalid]="userForm.get('birthDate')?.invalid && userForm.get('birthDate')?.touched">
+
+          <div class="invalid-feedback">Birthdate is required.</div>
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label">Phone Number</label>
+          <input type="tel" class="form-control rounded-pill" formControlName="phoneNumber"
+            [class.is-invalid]="userForm.get('phoneNumber')?.invalid && userForm.get('phoneNumber')?.touched"
+            placeholder = "Enter Phone Number" 
+            autocomplete="off"
+            list="phoneNumberSuggestions">
+            <datalist id="phoneNumberSuggestions">
+              @if (storedValues?.phoneNumber) {
+                <option [value]="storedValues.phoneNumber"></option>
+              }
+            </datalist>
+          <div class="invalid-feedback">Enter a valid 10-digit phone number.</div>
+        </div>
+
+        <div formGroupName="address" class="col-md-12">
+          <label class="form-label">Address</label>
+          <input type="text" class="form-control rounded-pill" formControlName="address1" placeholder ="Address Line 1"
+          autocomplete="off"
+          [class.is-invalid]="userForm.get('address.address1')?.invalid && userForm.get('address.address1')?.touched"
+          list="address1Suggestions">
+          <datalist id="address1Suggestions">
+            @if (storedValues?.address?.address1){
+              <option [value]="storedValues.address.address1"></option>
+            }
+          </datalist>
+          <div class="invalid-feedback">Enter a valid address</div>
+
+          <input type="text" class="form-control rounded-pill mt-2" formControlName="address2" 
+          placeholder ="Address Line 2 (optional)"
+          autocomplete="off"
+          list="address2Suggestions">
+          <datalist id="address2Suggestions">
+            @if (storedValues?.address?.address2){
+              <option [value]="storedValues.address.address2"></option>
+            }
+          </datalist>
+        </div>
+        
+        <div class="col-md-6">
+          <label class="form-label">Department</label>
+          <select class="form-select rounded-pill" formControlName="department">
+            <option value="" disabled selected>Select Department</option>
+            @for (dept of departments; track dept.id) {
+              <option [value]="dept.id">{{ dept.name }}</option>
+            }
+          </select>
+        </div>
+        
+        <div class="col-md-6">
+          <label class="form-label">Job Title</label>
+          <select class="form-select rounded-pill" formControlName="jobTitle">
+            <option value="" disabled>Select Job Title</option>
+            @for (job of jobTitles; track job.id) {
+              <option [value]="job.id">{{ job.title }}</option>
+            }
+          </select>
+        </div>
+        
+      </div> 
+
+      <!-- Submit Button -->
+      <div class="text-center mt-4">
+        <button type="submit" class="btn btn-primary mt-3 px-4 py-2 rounded-pill shadow-sm" [disabled]="userForm.invalid">
+           Submit
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

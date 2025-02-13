@@ -1,0 +1,28 @@
+.card {
+    border-radius: 20px;
+  }
+  
+  .form-control,
+  .form-select {
+    border-radius: 50px;
+    padding: 12px 15px;
+  }
+  
+  .btn-primary {
+    font-size: 1.1rem;
+  }
+
+  .profile-pic {
+    object-fit: cover; /* Crop image to fill the circle */
+    border-radius: 50%; /* Ensure it's fully circular */
+  }
+  
+  
+  img.profile-pic{
+    transition: 0.3s ease;
+  }
+  
+  img.profile-pic:hover {
+    transform: scale(1.05);
+  }
+  
