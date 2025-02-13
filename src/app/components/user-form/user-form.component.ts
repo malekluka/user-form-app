@@ -51,7 +51,7 @@ export class UserFormComponent implements OnInit {
   ngOnInit() {  
     this.loadFormData();
     
-    // ✅ Ensure users is always an array
+    // Ensure users is getting users array or empty array if users don't exist
     this.users = this.userDataService.getUsers() || [];
   
     console.log('Total users:', this.users.length)
@@ -77,7 +77,7 @@ export class UserFormComponent implements OnInit {
   @HostListener('window:beforeunload', ['$event'])
   beforeUnloadHandler(event: BeforeUnloadEvent) {
     if (this.userForm && this.userForm.dirty ) {
-      event.preventDefault(); // Standard approach
+      event.preventDefault(); 
     }
   }
 
